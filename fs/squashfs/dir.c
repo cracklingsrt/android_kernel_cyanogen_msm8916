@@ -112,8 +112,8 @@ static int squashfs_readdir(struct file *file, void *dirent, filldir_t filldir)
 	struct inode *inode = file_inode(file);
 	struct squashfs_sb_info *msblk = inode->i_sb->s_fs_info;
 	u64 block = squashfs_i(inode)->start + msblk->directory_table;
-	int offset = squashfs_i(inode)->offset, length, type, err;
-	unsigned int inode_number, dir_count, size;
+	int offset = squashfs_i(inode)->offset, length, err;
+	unsigned int inode_number, dir_count, size, type;
 	struct squashfs_dir_header dirh;
 	struct squashfs_dir_entry *dire;
 
@@ -219,6 +219,9 @@ static int squashfs_readdir(struct file *file, void *dirent, filldir_t filldir)
 					le16_to_cpu(dire->offset),
 					inode_number,
 					squashfs_filetype_table[type]);
+
+                        if (type > SQUASHFS_MAX_DIR_TYPE)
+                                goto failed_read;
 
 			if (filldir(dirent, dire->name, size, file->f_pos,
 					inode_number,
