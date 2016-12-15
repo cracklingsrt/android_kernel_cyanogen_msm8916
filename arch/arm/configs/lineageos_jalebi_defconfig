@@ -1,6 +1,7 @@
 // halogenOS configs
 CONFIG_LOCALVERSION="-halogenos"
 CONFIG_FORCE_FAST_CHARGE=y
+CONFIG_SOUND_CONTROL=y
 
 // LineageOS configs
 CONFIG_KERNEL_XZ=y
