@@ -15,21 +15,21 @@
 #include "cpufreq_governor.h"
 
 /* elementalx governor macros */
-#define DEF_FREQUENCY_UP_THRESHOLD		(90)
+#define DEF_FREQUENCY_UP_THRESHOLD		(80)
 #define DEF_FREQUENCY_DOWN_DIFFERENTIAL		(20)
-#define DEF_ACTIVE_FLOOR_FREQ			(960000)
+#define DEF_ACTIVE_FLOOR_FREQ			(400000)
 #define MIN_SAMPLING_RATE			(10000)
 #define DEF_SAMPLING_DOWN_FACTOR		(4)
 #define MAX_SAMPLING_DOWN_FACTOR		(20)
-#define FREQ_NEED_BURST(x)			(x < 800000 ? 1 : 0)
+#define FREQ_NEED_BURST(x)			(x < 533330 ? 1 : 0)
 #define MAX(x,y)				(x > y ? x : y)
 #define MIN(x,y)				(x < y ? x : y)
-#define TABLE_SIZE				12
-#define TABLE_NUM				6
+#define TABLE_SIZE				15
+#define TABLE_NUM				2
 
 static DEFINE_PER_CPU(struct ex_cpu_dbs_info_s, ex_cpu_dbs_info);
 
-static unsigned int up_threshold_level[2] __read_mostly = {95, 85};
+static unsigned int up_threshold_level[2] __read_mostly = {90, 80};
  
 static struct ex_governor_data {
 	unsigned int active_floor_freq;
@@ -43,99 +43,42 @@ static unsigned int tblmap[TABLE_NUM][TABLE_SIZE] __read_mostly = {
 
 	//table 0
 	{
-		616400,
-		757200,
-		840000,
-		960000,
-		1248000,
-		1344000,
-		1478400,
-		1555200,
-		1632000,
-		1728000,
-		1824000,
-		1958400,
+	      200000,
+	      400000,
+	      533330,
+	      800000,
+	      998400,
+	     1094400,
+	     1152000,
+	     1209600,
+	     1248000,
+	     1363200,
+	     1401600,
+	     1497600,
+	     1593600,
+      	     1689600,
+	     1785600, 
 	},
 
 	//table 1
 	{
-		773040,
-		899760,
-		1014960,
-		1072560,
-		1248000,
-		1344000,
-		1478400,
-		1555200,
-		1632000,
-		1728000,
-		1824000,
-		1958400,
+	      200000,
+	      400000,
+	      533330,
+	      800000,
+	      998400,
+	     1094400,
+	     1152000,
+	     1209600,
+	     1248000,
+	     1363200,
+	     1401600,
+	     1497600,
+	     1593600,
+      	     1689600,
+	     1785600, 
 	},
 
-	//table 2
-	{
-		851100,
-		956700,
-		1052700,
-		1100700,
-		1350400,
-		1416000,
-		1550400,
-		1627200,
-		1740800,
-		1824000,
-		1920000,
-		2054400,
-	},
-
-	//table 3
-	{
-		616400,
-		757200,
-		840000,
-		960000,
-		1248000,
-		1344000,
-		1478400,
-		1555200,
-		1555200,
-		1555200,
-		1555200,
-		1555200,
-	},
-
-	//table 4
-	{
-		773040,
-		899760,
-		1014960,
-		1072560,
-		1248000,
-		1344000,
-		1478400,
-		1555200,
-		1555200,
-		1555200,
-		1555200,
-		1555200,
-	},
-
-	//table 5
-	{
-		851100,
-		956700,
-		1052700,
-		1100700,
-		1350400,
-		1416000,
-		1550400,
-		1627200,
-		1627200,
-		1627200,
-		1627200,
-		1627200,
-	}
 
 };
 
