@@ -1,4 +1,8 @@
-CONFIG_LOCALVERSION="-lineageos"
+// halogenOS configs
+CONFIG_LOCALVERSION="-halogenos"
+CONFIG_FORCE_FAST_CHARGE=y
+
+// LineageOS configs
 CONFIG_KERNEL_XZ=y
 CONFIG_AUDIT=y
 CONFIG_NO_HZ=y
