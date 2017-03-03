@@ -51,13 +51,6 @@ static unsigned int tblmap[TABLE_NUM][TABLE_SIZE] __read_mostly = {
 	     1094400,
 	     1152000,
 	     1209600,
-	     1248000,
-	     1363200,
-	     1401600,
-	     1497600,
-	     1593600,
-      	     1689600,
-	     1785600, 
 	},
 
 	//table 1
@@ -70,13 +63,6 @@ static unsigned int tblmap[TABLE_NUM][TABLE_SIZE] __read_mostly = {
 	     1094400,
 	     1152000,
 	     1209600,
-	     1248000,
-	     1363200,
-	     1401600,
-	     1497600,
-	     1593600,
-      	     1689600,
-	     1785600, 
 	},
 
 
