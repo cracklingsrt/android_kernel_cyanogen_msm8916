@@ -15,22 +15,22 @@
 #include "cpufreq_governor.h"
 
 /* elementalx governor macros */
-#define DEF_FREQUENCY_UP_THRESHOLD		(80)
-#define DEF_FREQUENCY_DOWN_DIFFERENTIAL		(20)
+#define DEF_FREQUENCY_UP_THRESHOLD		(65)
+#define DEF_FREQUENCY_DOWN_DIFFERENTIAL		(15)
 #define DEF_ACTIVE_FLOOR_FREQ			(400000)
 #define MIN_SAMPLING_RATE			(10000)
 #define DEF_SAMPLING_DOWN_FACTOR		(4)
 #define MAX_SAMPLING_DOWN_FACTOR		(20)
-#define FREQ_NEED_BURST(x)			(x < 533330 ? 1 : 0)
+#define FREQ_NEED_BURST(x)			(x < 800000 ? 1 : 0)
 #define MAX(x,y)				(x > y ? x : y)
 #define MIN(x,y)				(x < y ? x : y)
-#define TABLE_SIZE				15
+#define TABLE_SIZE				8
 #define TABLE_NUM				2
 
 static DEFINE_PER_CPU(struct ex_cpu_dbs_info_s, ex_cpu_dbs_info);
 
 static unsigned int up_threshold_level[2] __read_mostly = {90, 80};
- 
+
 static struct ex_governor_data {
 	unsigned int active_floor_freq;
 	unsigned int prev_load;
@@ -51,13 +51,6 @@ static unsigned int tblmap[TABLE_NUM][TABLE_SIZE] __read_mostly = {
 	     1094400,
 	     1152000,
 	     1209600,
-	     1248000,
-	     1363200,
-	     1401600,
-	     1497600,
-	     1593600,
-      	     1689600,
-	     1785600, 
 	},
 
 	//table 1
@@ -70,13 +63,6 @@ static unsigned int tblmap[TABLE_NUM][TABLE_SIZE] __read_mostly = {
 	     1094400,
 	     1152000,
 	     1209600,
-	     1248000,
-	     1363200,
-	     1401600,
-	     1497600,
-	     1593600,
-      	     1689600,
-	     1785600, 
 	},
 
 
@@ -86,7 +72,7 @@ static inline int get_cpu_freq_index(unsigned int freq, struct dbs_data *dbs_dat
 {
 	static int saved_index = 0;
 	int index;
-	
+
 	if (!dbs_data->freq_table) {
 		pr_warn("tbl is NULL, use previous value %d\n", saved_index);
 		return saved_index;
@@ -106,8 +92,8 @@ static inline unsigned int ex_freq_increase(struct cpufreq_policy *p, unsigned i
 {
 	if (freq > p->max) {
 		return p->max;
-	} 
-	
+	}
+
 	return freq;
 }
 
@@ -136,20 +122,20 @@ static void ex_check_cpu(int cpu, unsigned int load)
 				load > up_threshold_level[0]) {
 			freq_next = max_freq;
 		}
-		
+
 		else if (avg_load > up_threshold_level[0]) {
 			freq_next = tblmap[2 + ex_tuners->powersave][index];
 		}
-		
+
 		else if (avg_load <= up_threshold_level[1]) {
 			freq_next = tblmap[0 + ex_tuners->powersave][index];
 		}
-	
+
 		else {
 			if (load > up_threshold_level[0]) {
 				freq_next = tblmap[2 + ex_tuners->powersave][index];
 			}
-		
+
 			else {
 				freq_next = tblmap[1 + ex_tuners->powersave][index];
 			}
