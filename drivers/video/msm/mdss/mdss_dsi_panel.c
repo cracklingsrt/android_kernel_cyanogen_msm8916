@@ -22,6 +22,7 @@
 #include <linux/qpnp/pwm.h>
 #include <linux/err.h>
 
+#include <linux/display_state.h>
 #include "mdss_dsi.h"
 
 #define DT_CMD_HDR 6
@@ -48,6 +49,12 @@ char g_lcm_id[128];
 #endif
 
 DEFINE_LED_TRIGGER(bl_led_trigger);
+
+bool display_on = true;
+
+bool is_display_on() {
+    return display_on;
+}
 
 void mdss_dsi_panel_pwm_cfg(struct mdss_dsi_ctrl_pdata *ctrl)
 {
@@ -485,9 +492,8 @@ static int mdss_dsi_set_col_page_addr(struct mdss_panel_data *pdata)
 		pr_err("%s: Invalid input data\n", __func__);
 		return -EINVAL;
 	}
-
-	ctrl = container_of(pdata, struct mdss_dsi_ctrl_pdata,
-				panel_data);
+       ctrl = container_of(pdata, struct mdss_dsi_ctrl_pdata,
+                               panel_data);
 
 	pinfo = &pdata->panel_info;
 	p_roi = &pinfo->roi;
@@ -740,6 +746,7 @@ static int mdss_dsi_panel_off(struct mdss_panel_data *pdata)
 	ctrl = container_of(pdata, struct mdss_dsi_ctrl_pdata,
 				panel_data);
 
+        display_on = true;
 	pr_debug("%s: ctrl=%pK ndx=%d\n", __func__, ctrl, ctrl->ndx);
 
 	if (pinfo->dcs_cmd_by_left) {
@@ -749,6 +756,8 @@ static int mdss_dsi_panel_off(struct mdss_panel_data *pdata)
 
 	if (ctrl->off_cmds.cmd_cnt)
 		mdss_dsi_panel_cmds_send(ctrl, &ctrl->off_cmds);
+
+        display_on = false;
 
 end:
 	pinfo->blank_state = MDSS_PANEL_BLANK_BLANK;
