@@ -45,7 +45,7 @@ function make_kernel {
 		make $DEFCONFIG $THREAD
 		make $KERNEL $THREAD
                 #make dtbs $THREAD
-		[ -f $ZIMAGE_DIR/$KERNEL ] && cp -vr $ZIMAGE_DIR/$KERNEL $REPACK_DIR/tools/zImage || exit 1
+		[ -f $ZIMAGE_DIR/$KERNEL ] && cp -vr $ZIMAGE_DIR/$KERNEL $REPACK_DIR/zImage || exit 1
 }
 
 #function make_modules {
@@ -59,15 +59,15 @@ function make_kernel {
 
 function make_dtb {
 		$KERNEL_DIR/dtbToolCM -2 -o $KERNEL_DIR/arch/arm/boot/dt.img -s 2048 -p $KERNEL_DIR/scripts/dtc/ $KERNEL_DIR/arch/arm/boot/dts/
-		cp -vr $KERNEL_DIR/arch/arm/boot/dt.img $REPACK_DIR/tools/dt.img
+		cp -vr $KERNEL_DIR/arch/arm/boot/dt.img $REPACK_DIR/dtb
 }
 
 function make_zip {
-		cd $REPACK_DIR
-        zip -ur kernel_temp.zip *
-        mkdir -p $ZIP_MOVE
-		cp  kernel_temp.zip $ZIP_MOVE/`echo $FINAL_VER`.zip
-		cd $KERNEL_DIR
+    cd $REPACK_DIR
+    zip -r9 $FINAL_VER.zip * -x README kernel_temp.zip
+    mkdir -p $ZIP_MOVE
+    cp  kernel_temp.zip $ZIP_MOVE/`echo $FINAL_VER`.zip
+    cd $KERNEL_DIR
 }
 
 DATE_START=$(date +"%s")
