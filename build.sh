@@ -12,7 +12,7 @@ clear
 
 # Resources
 THREAD="-j$(grep -c ^processor /proc/cpuinfo)"
-DEFCONFIG="XOS_jalebi_defconfig"
+DEFCONFIG="lineageos_jalebi_defconfig"
 KERNEL="zImage"
 
 #halogen Kernel Details
