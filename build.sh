@@ -16,10 +16,11 @@ DEFCONFIG="lineageos_jalebi_defconfig"
 KERNEL="zImage"
 
 #halogen Kernel Details
-BASE_VER="Caesium"
-VER="-$(date +"%Y%m%d")-v1.4"
+KERNEL_NAME="Caesium"
+VER="v1.5"
+VER="-$(date +"%Y%m%d")-$VER"
 DEVICE="-$(echo $DEFCONFIG | cut -d _ -f 2)"
-FINAL_VER="$BASE_VER""$DEVICE""$VER"
+FINAL_VER="$KERNEL_NAME""$DEVICE""$VER"
 
 # Vars
 export ARCH=arm
