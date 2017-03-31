@@ -30,7 +30,7 @@ struct rock_state {
 	int cont_size;
 	int cont_extent;
 	int cont_offset;
-	int cont_loops;
+        int cont_loops;
 	struct inode *inode;
 };
 
@@ -76,6 +76,7 @@ static void init_rock_state(struct rock_state *rs, struct inode *inode)
 
 /* Maximum number of Rock Ridge continuation entries */
 #define RR_MAX_CE_ENTRIES 32
+
 
 /*
  * Returns 0 if the caller should continue scanning, 1 if the scan must end
