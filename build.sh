@@ -63,11 +63,22 @@ function tg() {
 }
 
 function upload() {
-  echo -e "${cyan} Uploading file to Telegram ${restore}"
-  tg kernel_out/$FINAL_VER.zip
+  if [ $AFH_UPLOAD ]; then
+    echo -e "${cyan} Uploading file to AFH ${restore}"
+    afh_upload
+  else
+    echo -e "${cyan} Uploading file to Telegram ${restore}"
+    tg kernel_out/$FINAL_VER.zip
+  fi
 }
 
-while getopts ":ctu" opt; do
+function afh_upload() {
+  cd kernel_out
+  wput ftp://${AFH_CREDENTIALS}@uploads.androidfilehost.com/ ${FINAL_VER}.zip
+  cd ${KERNEL_DIR}
+}
+
+while getopts ":ctua" opt; do
   case $opt in
     c)
       echo -e "${cyan} Building clean ${restore}" >&2
@@ -78,8 +89,12 @@ while getopts ":ctu" opt; do
       UPLOAD=true
       ;;
     u)
-      echo -e "${cyan} Only making ZIP and uploading to Telegram! ${restore}" >&2
+      echo -e "${cyan} Only making ZIP and uploading ${restore}" >&2
       ONLY_UPLOAD=true
+      ;;
+    a)
+      echo -e "${cyan} Will upload build to AFH ${restore}" >&2
+      AFH_UPLOAD=true
       ;;
     \?)
       echo "Invalid option: -$OPTARG" >&2
