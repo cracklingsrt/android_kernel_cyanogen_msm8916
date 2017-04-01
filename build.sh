@@ -78,7 +78,7 @@ function afh_upload() {
   cd ${KERNEL_DIR}
 }
 
-while getopts ":ctua" opt; do
+while getopts ":ctuab" opt; do
   case $opt in
     c)
       echo -e "${cyan} Building clean ${restore}" >&2
@@ -95,6 +95,10 @@ while getopts ":ctua" opt; do
     a)
       echo -e "${cyan} Will upload build to AFH ${restore}" >&2
       AFH_UPLOAD=true
+      ;;
+    b)
+      echo -e "${cyan} Building ZIP only ${restore}" >&2
+      ONLY_ZIP=true
       ;;
     \?)
       echo "Invalid option: -$OPTARG" >&2
@@ -114,6 +118,7 @@ cd $KERNEL_DIR
 
 # Make
 [ $ONLY_UPLOAD ] && make_zip && upload && exit 0
+[ $ONLY_ZIP ] && make_zip && exit 0
 make_kernel
 make_dtb
 make_zip
