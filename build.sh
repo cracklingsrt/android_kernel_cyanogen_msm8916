@@ -78,7 +78,12 @@ function afh_upload() {
   cd ${KERNEL_DIR}
 }
 
-while getopts ":ctuab" opt; do
+function push_and_flash() {
+  adb push kernel_out/${FINAL_VER}.zip /sdcard/
+  adb shell twrp install "/sdcard/${FINAL_VER}.zip"
+}
+
+while getopts ":ctuabf" opt; do
   case $opt in
     c)
       echo -e "${cyan} Building clean ${restore}" >&2
@@ -100,6 +105,10 @@ while getopts ":ctuab" opt; do
       echo -e "${cyan} Building ZIP only ${restore}" >&2
       ONLY_ZIP=true
       ;;
+    f)
+      echo -e "{cyan} Will auto-flash kernel ${restore}" >&2
+      FLASH=true
+      ;;
     \?)
       echo "Invalid option: -$OPTARG" >&2
       ;;
@@ -117,11 +126,16 @@ rm -rf dt.img
 cd $KERNEL_DIR
 
 # Make
-[ $ONLY_UPLOAD ] && make_zip && upload && exit 0
-[ $ONLY_ZIP ] && make_zip && exit 0
+if [ $ONLY_UPLOAD ]; then
+  make_zip && upload
+elif [ $ONLY_ZIP ]; then
+  make_zip
+else
 make_kernel
 make_dtb
 make_zip
+fi
+[ $FLASH ] && push_and_flash
 
 echo -e "${green}"
 echo $FINAL_VER.zip
