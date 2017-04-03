@@ -34,7 +34,7 @@ RESOURCE_DIR="/home/msfjarvis/git-repos/halogenOS/android_kernel_cyanogen_msm891
 ANYKERNEL_DIR="$RESOURCE_DIR/AnyKernel2"
 TOOLCHAIN_DIR="/home/msfjarvis/git-repos/toolchains/arm-eabi-4.8/"
 REPACK_DIR="$ANYKERNEL_DIR"
-ZIP_MOVE="$RESOURCE_DIR/kernel_out/"
+ZIP_MOVE="$RESOURCE_DIR/out/"
 ZIMAGE_DIR="$KERNEL_DIR/arch/arm/boot"
 
 # Functions
@@ -68,18 +68,18 @@ function upload() {
     afh_upload
   else
     echo -e "${cyan} Uploading file to Telegram ${restore}"
-    tg kernel_out/$FINAL_VER.zip
+    tg "$ZIP_MOVE"/"$FINAL_VER".zip
   fi
 }
 
 function afh_upload() {
-  cd kernel_out
+  cd "$ZIP_MOVE"
   wput ftp://${AFH_CREDENTIALS}@uploads.androidfilehost.com/ ${FINAL_VER}.zip
   cd ${KERNEL_DIR}
 }
 
 function push_and_flash() {
-  adb push kernel_out/${FINAL_VER}.zip /sdcard/
+  adb push "$ZIP_MOVE"/${FINAL_VER}.zip /sdcard/
   adb shell twrp install "/sdcard/${FINAL_VER}.zip"
 }
 
