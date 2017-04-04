@@ -66,10 +66,9 @@ function upload() {
   if [ $AFH_UPLOAD ]; then
     echo -e "${cyan} Uploading file to AFH ${restore}"
     afh_upload
-  else
+  fi
     echo -e "${cyan} Uploading file to Telegram ${restore}"
     tg "$ZIP_MOVE"/"$FINAL_VER".zip
-  fi
 }
 
 function afh_upload() {
