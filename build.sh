@@ -59,7 +59,7 @@ function make_zip() {
 }
 
 function tg() {
-  curl -F chat_id="$TG_ID" -F document="@$1" "https://api.telegram.org/bot$TG_BOT_ID/sendDocument"
+  curl -F chat_id="$TG_BETA_CHANNEL_ID" -F document="@$1" "https://api.telegram.org/bot$TG_BOT_ID/sendDocument"
 }
 
 function upload() {
