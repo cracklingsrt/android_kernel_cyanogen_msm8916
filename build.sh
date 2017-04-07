@@ -42,12 +42,12 @@ function make_kernel() {
   [ $CLEAN ] && make clean
   make $DEFCONFIG $THREAD
   make $KERNEL $THREAD
-	[ -f $ZIMAGE_DIR/$KERNEL ] && cp -vr $ZIMAGE_DIR/$KERNEL $REPACK_DIR/tools/zImage || exit 1
+	[ -f $ZIMAGE_DIR/$KERNEL ] && cp -vr $ZIMAGE_DIR/$KERNEL $REPACK_DIR/zImage || exit 1
 }
 
 function make_dtb() {
   $KERNEL_DIR/dtbToolCM -2 -o $KERNEL_DIR/arch/arm/boot/dt.img -s 2048 -p $KERNEL_DIR/scripts/dtc/ $KERNEL_DIR/arch/arm/boot/dts/
-  [ -f "$KERNEL_DIR/arch/arm/boot/dt.img" ] && cp -vr $KERNEL_DIR/arch/arm/boot/dt.img $REPACK_DIR/tools/dt.img || exit 1
+  [ -f "$KERNEL_DIR/arch/arm/boot/dt.img" ] && cp -vr $KERNEL_DIR/arch/arm/boot/dt.img $REPACK_DIR/dtb || exit 1
 }
 
 function make_zip() {
