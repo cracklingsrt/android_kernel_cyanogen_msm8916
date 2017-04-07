@@ -1,0 +1,4 @@
+[submodule "AnyKernel2"]
+	path = AnyKernel2
+	url = https://github.com/MSF-Jarvis/AnyKernel2
+	branch = master
