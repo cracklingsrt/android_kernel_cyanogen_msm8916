@@ -42,7 +42,7 @@ function make_kernel() {
   [ $CLEAN ] && make clean
   make $DEFCONFIG $THREAD
   make $KERNEL $THREAD
-	[ -f $ZIMAGE_DIR/$KERNEL ] && cp -vr $ZIMAGE_DIR/$KERNEL $REPACK_DIR/zImage || exit 1
+  [ -f $ZIMAGE_DIR/$KERNEL ] && cp -vr $ZIMAGE_DIR/$KERNEL $REPACK_DIR/zImage || exit 1
 }
 
 function make_dtb() {
@@ -119,9 +119,6 @@ DATE_START=$(date +"%s")
 # TC tasks
 export CROSS_COMPILE=$TOOLCHAIN_DIR/bin/arm-eabi-
 export LD_LIBRARY_PATH=$TOOLCHAIN_DIR/lib/
-cd $ANYKERNEL_DIR/tools
-rm -rf $ZIMAGE_DIR/zImage
-rm -rf dt.img
 cd $KERNEL_DIR
 
 # Make
