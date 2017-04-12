@@ -11,7 +11,7 @@ restore='\033[0m'
 clear
 
 # Resources
-THREAD="-j$(grep -c ^processor /proc/cpuinfo)"
+THREAD="-j$(nproc --all)"
 DEFCONFIG="lineageos_jalebi_defconfig"
 KERNEL="zImage"
 
