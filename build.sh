@@ -18,7 +18,7 @@ KERNEL="zImage"
 #halogen Kernel Details
 KERNEL_NAME="Caesium"
 VER="v1.8"
-VER="-$(date +"%Y%m%d")-$VER"
+VER="-$(date +"%Y%m%d"-"%H%M%S")-$VER"
 DEVICE="-$(echo $DEFCONFIG | cut -d _ -f 2)"
 FINAL_VER="$KERNEL_NAME""$DEVICE""$VER"
 
