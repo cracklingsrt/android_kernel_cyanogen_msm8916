@@ -17,14 +17,14 @@
 /* elementalx governor macros */
 #define DEF_FREQUENCY_UP_THRESHOLD		(65)
 #define DEF_FREQUENCY_DOWN_DIFFERENTIAL		(15)
-#define DEF_ACTIVE_FLOOR_FREQ			(400000)
+#define DEF_ACTIVE_FLOOR_FREQ			(200000)
 #define MIN_SAMPLING_RATE			(10000)
 #define DEF_SAMPLING_DOWN_FACTOR		(4)
 #define MAX_SAMPLING_DOWN_FACTOR		(20)
-#define FREQ_NEED_BURST(x)			(x < 800000 ? 1 : 0)
+#define FREQ_NEED_BURST(x)			(x < 998400 ? 1 : 0)
 #define MAX(x,y)				(x > y ? x : y)
 #define MIN(x,y)				(x < y ? x : y)
-#define TABLE_SIZE				8
+#define TABLE_SIZE				10
 #define TABLE_NUM				2
 
 static DEFINE_PER_CPU(struct ex_cpu_dbs_info_s, ex_cpu_dbs_info);
@@ -51,6 +51,8 @@ static unsigned int tblmap[TABLE_NUM][TABLE_SIZE] __read_mostly = {
 	     1094400,
 	     1152000,
 	     1209600,
+	     1363200,
+	     1401600,
 	},
 
 	//table 1
@@ -63,6 +65,8 @@ static unsigned int tblmap[TABLE_NUM][TABLE_SIZE] __read_mostly = {
 	     1094400,
 	     1152000,
 	     1209600,
+	     1363200,
+	     1401600,
 	},
 
 
