@@ -187,11 +187,5 @@ else
 		res="$res${scm:++}"
 	fi
 fi
-DEFCONFIG="lineageos_jalebi_defconfig"
-KERNEL_NAME="Caesium"
-VER="v1.8"
-DEVICE="-$(echo $DEFCONFIG | cut -d _ -f 2)"
-FINAL_VER="-$KERNEL_NAME""$DEVICE"-"$VER"
-res="$FINAL_VER"
 
 echo "$res"
