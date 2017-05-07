@@ -1,6 +1,8 @@
 #!/bin/bash
-rm .version
-# Bash Color
+
+rm .version 2>/dev/null
+
+# Bash colors
 green='\033[01;32m'
 red='\033[01;31m'
 cyan='\033[01;36m'
@@ -15,7 +17,7 @@ THREAD="-j$(nproc --all)"
 DEFCONFIG="lineageos_jalebi_defconfig"
 KERNEL="zImage"
 
-#halogen Kernel Details
+# Caesium Kernel Details
 KERNEL_NAME="Caesium"
 VER="v1.8"
 VER="-$(date +"%Y%m%d"-"%H%M%S")-$VER"
@@ -105,7 +107,7 @@ while getopts ":ctuabf" opt; do
       ONLY_ZIP=true
       ;;
     f)
-      echo -e "{cyan} Will auto-flash kernel ${restore}" >&2
+      echo -e "${cyan} Will auto-flash kernel ${restore}" >&2
       FLASH=true
       ;;
     \?)
